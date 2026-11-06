@@ -1044,3 +1044,38 @@ code {
         padding-right: 15px;
     }
 }
+
+/* Sub-projects with waiting or fuzzy strings on the Waiting tab */
+.gd-waiting-links {
+    border-top: 1px solid #dcdcde;
+    font-size: 13px;
+    padding: 8px 15px;
+}
+
+.gd-waiting-links-loading,
+.gd-waiting-links-error {
+    color: #646970;
+}
+
+.gd-waiting-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.gd-waiting-links li {
+    margin: 0 0 4px;
+}
+
+.gd-waiting-links-name {
+    display: block;
+    font-weight: 600;
+}
+
+.gd-waiting-links-state {
+    margin-right: 12px;
+}
+
+span.gd-waiting-links-state {
+    color: #646970;
+}

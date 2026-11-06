@@ -140,3 +140,4 @@ gd_wait_table_alter();
 gd_localize_date();
 gd_anonymous();
 gd_pagination();
+gd_waiting_links();

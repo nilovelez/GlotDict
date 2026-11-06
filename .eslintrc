@@ -57,6 +57,7 @@
 		"gd_user": true,
 		"gd_validate_visible": true,
 		"gd_wait_table_alter": true,
+		"gd_waiting_links": true,
 		"glotdict_version": true,
 		"jQuery": true,
 		"key": true,

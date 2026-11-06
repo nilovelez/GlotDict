@@ -29,6 +29,7 @@
         "js/glotdict-meta.js",
         "js/glotdict-consistency.js",
         "js/glotdict-settings.js",
+        "js/glotdict-waiting-links.js",
         "js/keymaster.js",
         "js/jquery.bind-first.js",
         "js/dompurify.js",
