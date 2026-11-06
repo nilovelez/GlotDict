@@ -1046,6 +1046,10 @@ code {
 }
 
 /* Sub-projects with waiting or fuzzy strings on the Waiting tab */
+.gd-waiting-links-page .project .project-bottom {
+    display: none;
+}
+
 .gd-waiting-links {
     border-top: 1px solid #dcdcde;
     font-size: 13px;
@@ -1057,25 +1061,40 @@ code {
     color: #646970;
 }
 
-.gd-waiting-links ul {
-    list-style: none;
+.gd-waiting-links table {
+    border: 0;
+    border-collapse: collapse;
+    box-shadow: none;
     margin: 0;
-    padding: 0;
+    width: 100%;
 }
 
-.gd-waiting-links li {
-    margin: 0 0 4px;
+.gd-waiting-links th,
+.gd-waiting-links td {
+    background: none;
+    border: 0;
+    font-size: 13px;
+    padding: 2px 0;
 }
 
-.gd-waiting-links-name {
-    display: block;
-    font-weight: 600;
-}
-
-.gd-waiting-links-state {
-    margin-right: 12px;
-}
-
-span.gd-waiting-links-state {
+.gd-waiting-links thead th {
     color: #646970;
+    font-weight: 400;
+}
+
+.gd-waiting-links tbody th {
+    font-weight: 400;
+    text-align: left;
+}
+
+.gd-waiting-links thead th:not(:first-child),
+.gd-waiting-links td {
+    padding-left: 12px;
+    text-align: right;
+    white-space: nowrap;
+    width: 1%;
+}
+
+.gd-waiting-links td a {
+    font-weight: 600;
 }

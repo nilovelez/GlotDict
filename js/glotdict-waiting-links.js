@@ -15,6 +15,7 @@ function gd_waiting_links() {
 	if ( ! gd_waiting_links_applies() ) {
 		return;
 	}
+	document.body.classList.add( 'gd-waiting-links-page' );
 
 	const cards = Array.from( document.querySelectorAll( '#projects .project' ) );
 	const queue = cards.filter( ( card ) => null !== card.querySelector( '.project-name a' ) );
@@ -100,7 +101,7 @@ function gd_waiting_links_card( card ) {
 /**
  * Reads the sub-projects with waiting or fuzzy strings from a project page
  * @param {Document} page The project page in the locale
- * @returns {Array} Sub-projects, each with name, url, waiting and fuzzy
+ * @returns {Array} Sub-projects, each with name, waiting and fuzzy
  */
 function gd_waiting_links_parse( page ) {
 	const sub_projects = [];
@@ -110,8 +111,8 @@ function gd_waiting_links_parse( page ) {
 			return;
 		}
 		const sub_project = {
-			name:    name.textContent.trim(),
-			url:     name.getAttribute( 'href' ),
+			// "Stable (latest release)" is shown as "Stable".
+			name:    name.textContent.replace( /\s*\([^)]*\)\s*$/, '' ).trim(),
 			waiting: gd_waiting_links_count( row.querySelector( 'td.waiting a' ) ),
 			fuzzy:   gd_waiting_links_count( row.querySelector( 'td.fuzzy a' ) ),
 		};
@@ -140,7 +141,7 @@ function gd_waiting_links_count( link ) {
 }
 
 /**
- * Adds the sub-projects to a project card
+ * Adds the sub-projects to a project card, as a table
  * @param {HTMLElement} card The project card
  * @param {Array} sub_projects Sub-projects returned by gd_waiting_links_parse()
  * @returns {void}
@@ -152,33 +153,39 @@ function gd_waiting_links_render( card, sub_projects ) {
 		return;
 	}
 
-	const list = document.createElement( 'UL' );
-	sub_projects.forEach( ( sub_project ) => {
-		const item = document.createElement( 'LI' );
-		const name = document.createElement( 'A' );
-		name.className = 'gd-waiting-links-name';
-		name.href = sub_project.url;
-		name.textContent = sub_project.name;
-		item.appendChild( name );
-		item.appendChild( gd_waiting_links_state( 'Waiting', sub_project.waiting ) );
-		item.appendChild( gd_waiting_links_state( 'Fuzzy', sub_project.fuzzy ) );
-		list.appendChild( item );
+	const table = document.createElement( 'TABLE' );
+	const head = table.createTHead().insertRow();
+	[ '', 'Waiting', 'Fuzzy' ].forEach( ( label ) => {
+		const cell = document.createElement( 'TH' );
+		cell.textContent = label;
+		head.appendChild( cell );
 	} );
-	box.appendChild( list );
+
+	const body = table.createTBody();
+	sub_projects.forEach( ( sub_project ) => {
+		const row = body.insertRow();
+		const name = document.createElement( 'TH' );
+		name.scope = 'row';
+		name.textContent = sub_project.name;
+		row.appendChild( name );
+		row.appendChild( gd_waiting_links_state( sub_project.waiting ) );
+		row.appendChild( gd_waiting_links_state( sub_project.fuzzy ) );
+	} );
+	box.appendChild( table );
 }
 
 /**
- * Builds the link to the strings of a sub-project in one state
- * @param {string} label Name of the state
+ * Builds the table cell with the count of a sub-project in one state
  * @param {Object} state Count and URL returned by gd_waiting_links_count()
- * @returns {HTMLElement} A link, or a plain span when there are no strings
+ * @returns {HTMLElement} The cell: a link to the strings, or empty when there are none
  */
-function gd_waiting_links_state( label, state ) {
-	const element = document.createElement( state.count > 0 ? 'A' : 'SPAN' );
-	element.className = `gd-waiting-links-state gd-waiting-links-${label.toLowerCase()}`;
-	element.textContent = `${label}: ${state.text}`;
+function gd_waiting_links_state( state ) {
+	const cell = document.createElement( 'TD' );
 	if ( state.count > 0 ) {
-		element.href = state.url;
+		const link = document.createElement( 'A' );
+		link.href = state.url;
+		link.textContent = state.text;
+		cell.appendChild( link );
 	}
-	return element;
+	return cell;
 }
