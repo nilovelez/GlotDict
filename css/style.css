@@ -1046,7 +1046,8 @@ code {
 }
 
 /* Sub-projects with waiting or fuzzy strings on the Waiting tab */
-.gd-waiting-links-page .project .project-bottom {
+.gd-waiting-links-page .project .project-bottom,
+.gd-waiting-links-page .project .project-description {
     display: none;
 }
 
@@ -1074,7 +1075,12 @@ code {
     background: none;
     border: 0;
     font-size: 13px;
-    padding: 2px 0;
+    padding: 3px 6px;
+}
+
+.gd-waiting-links tbody tr:nth-child(odd) th,
+.gd-waiting-links tbody tr:nth-child(odd) td {
+    background: #f6f7f7;
 }
 
 .gd-waiting-links thead th {
@@ -1093,6 +1099,10 @@ code {
     text-align: right;
     white-space: nowrap;
     width: 1%;
+}
+
+.gd-waiting-links td {
+    font-size: 15px;
 }
 
 .gd-waiting-links td a {
