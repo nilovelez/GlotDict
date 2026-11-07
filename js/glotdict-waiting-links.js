@@ -42,11 +42,12 @@ function gd_waiting_links() {
  * @returns {boolean}
  */
 function gd_waiting_links_applies() {
-	if ( ! /^\/locale\/[^/]+\/[^/]+\//.test( window.location.pathname ) ) {
+	if ( ! /^\/locale\/[^/]+\//.test( window.location.pathname ) ) {
 		return false;
 	}
 	// The Waiting tab is also the default tab of the locale page for editors
-	// (/locale/<locale>/<set>/ and its pages), so check the active tab, not the URL.
+	// (/locale/<locale>/, /locale/<locale>/<set>/ and their pages), so check the
+	// active tab, not the URL.
 	const tab = document.querySelector( 'a.current[href^="/locale/"]' );
 	if ( null !== tab && /\/waiting\/?$/.test( tab.getAttribute( 'href' ) ) ) {
 		return true;
