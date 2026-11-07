@@ -42,12 +42,14 @@ function gd_waiting_links() {
  * @returns {boolean}
  */
 function gd_waiting_links_applies() {
-	const path = window.location.pathname;
-	if ( /^\/locale\/[^/]+\/[^/]+\/waiting\/?$/.test( path ) ) {
-		return true;
-	}
-	if ( ! /^\/locale\/[^/]+\/[^/]+\/[^/]+\/?$/.test( path ) ) {
+	if ( ! /^\/locale\/[^/]+\/[^/]+\//.test( window.location.pathname ) ) {
 		return false;
+	}
+	// The Waiting tab is also the default tab of the locale page for editors
+	// (/locale/<locale>/<set>/ and its pages), so check the active tab, not the URL.
+	const tab = document.querySelector( 'a.current[href^="/locale/"]' );
+	if ( null !== tab && /\/waiting\/?$/.test( tab.getAttribute( 'href' ) ) ) {
+		return true;
 	}
 	const filter = new URLSearchParams( window.location.search ).get( 'filter' ) || '';
 	return 0 === filter.indexOf( 'strings-waiting-and-fuzzy' );
